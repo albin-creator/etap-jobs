@@ -106,7 +106,7 @@ new Vue({
     filteredJobs() { return this.jobs; }  
   },  
   methods: {  
-    async loadJobs() { this.jobs = await api('/jobs'); },  
+    async loadJobs() { this.jobs = await api('/api/jobs'); },  
     async saveDelivery(job) {  
       await api(`/jobs/${job.id}/delivery`, 'PATCH', {  
         zone: job.zone,  
