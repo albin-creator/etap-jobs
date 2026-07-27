@@ -1,0 +1,111 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>eTap · printer</title>  
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+  <style>  
+    body { background: #f4f7fc; }  
+    .glass-card { background: rgba(255,255,255,0.7); backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.3); }  
+    .elegant-shadow { box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08), 0 8px 24px -6px rgba(0,0,0,0.02); }  
+    .card-hover { transition: all 0.2s ease; }  
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -12px rgba(0,0,0,0.15); }  
+    .badge-pill { border-radius: 9999px; padding: 0.2rem 0.9rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.02em; }  
+  </style>  
+</head>  
+<body class="font-sans antialiased text-slate-700 p-6 md:p-10">
+
+<div id="app" class="max-w-7xl mx-auto">
+
+  <!-- header -->  
+  <div class="flex items-center justify-between gap-4 mb-10">  
+    <div class="flex items-center gap-3">  
+      <span class="text-3xl"><i class="fas fa-layer-group text-indigo-500"></i></span>  
+      <h1 class="text-2xl font-light tracking-tight text-slate-800">eTap <span class="font-medium text-indigo-600">jobs</span></h1>  
+    </div>  
+    <div class="flex items-center gap-3">  
+      <span class="bg-amber-50 text-amber-700 text-xs px-4 py-1.5 rounded-full border border-amber-100"><i class="fas fa-print mr-1"></i>printer</span>  
+      <button onclick="logout()" class="text-sm text-slate-400 hover:text-rose-500"><i class="fas fa-sign-out-alt"></i></button>  
+    </div>  
+  </div>
+
+  <!-- job cards grid -->  
+  <div>  
+    <div class="flex items-center justify-between mb-5">  
+      <h3 class="text-lg font-medium text-slate-700 flex items-center gap-2"><i class="fas fa-th-large text-indigo-400"></i> print queue · {{ filteredJobs.length }}</h3>  
+      <span class="text-xs text-slate-400 bg-white px-3 py-1 rounded-full border border-slate-200">printer view</span>  
+    </div>  
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">  
+      <div v-for="job in filteredJobs" :key="job.id" @click="selectedjob = job" class="glass-card elegant-shadow rounded-2xl p-5 card-hover cursor-pointer bg-white/80 backdrop-blur-sm border border-white/50">  
+        <div class="flex items-start justify-between">  
+          <div class="flex items-center gap-3">  
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-indigo-600 font-bold text-sm"><i class="fas fa-user"></i></div>  
+            <div><div class="font-medium text-slate-700">{{ job.customer || 'unnamed' }}</div><div class="text-xs text-slate-400">{{ job.orderNo }}</div></div>  
+          </div>  
+          <span class="badge-pill" :class="job.status==='printer' ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700'">{{ job.status || 'pending' }}</span>  
+        </div>  
+        <div class="mt-3 text-xs text-slate-500 flex flex-wrap gap-2">  
+          <span><i class="far fa-calendar mr-1"></i>{{ job.jobDate }}</span>  
+          <span><i class="far fa-clock mr-1"></i>{{ job.dueDate }}</span>  
+        </div>  
+        <div class="mt-2 text-sm text-slate-600 line-clamp-1"><i class="fas fa-cube mr-1 text-slate-300"></i> {{ job.items?.length || 0 }} items</div>  
+        <div class="mt-3 text-right font-mono text-sm font-medium text-indigo-600">${{ Number(job.total).toFixed(2) }}</div>  
+        <div class="mt-2 flex gap-1 flex-wrap text-[10px]">  
+          <span v-for="it in job.items?.slice(0,2)" class="bg-slate-100 px-2 py-0.5 rounded-full">{{ it.name }} ({{ it.qty }})</span>  
+          <span v-if="job.items?.length > 2" class="text-slate-400">+{{ job.items.length-2 }}</span>  
+        </div>  
+      </div>  
+    </div>  
+  </div>
+
+  <!-- modal: detail + action -->  
+  <div v-if="selectedJob" class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4" @click.self="selectedjob=null">  
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto elegant-shadow p-6 md:p-8">  
+      <div class="flex items-start justify-between mb-4"><h3 class="text-xl font-medium text-slate-700"><i class="fas fa-id-card mr-2 text-indigo-400"></i>job #{{ selectedJob.id }}</h3><button @click="selectedjob=null" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button></div>  
+      <div class="grid grid-cols-2 gap-3 text-sm"><div><span class="text-slate-400">customer</span><div class="font-medium">{{ selectedJob.customer }}</div></div><div><span class="text-slate-400">order</span><div>{{ selectedJob.orderNo }}</div></div><div><span class="text-slate-400">date</span><div>{{ selectedJob.jobDate }}</div></div><div><span class="text-slate-400">due</span><div>{{ selectedJob.dueDate }}</div></div></div>  
+      <div class="mt-4 border-t pt-4"><span class="text-slate-400 text-sm">items</span><div v-for="it in selectedJob.items" class="flex justify-between text-sm py-1 border-b border-slate-50"><span>{{ it.name }} × {{ it.qty }} {{ it.unit }}</span><span class="font-mono">${{ Number(it.qty * it.price).toFixed(2) }}</span></div></div>  
+      <div class="flex justify-between mt-3 text-sm"><span>subtotal</span><span class="font-mono">${{ Number(selectedJob.subtotal).toFixed(2) }}</span></div>  
+      <div class="flex justify-between text-base font-semibold"><span>total</span><span class="font-mono">${{ Number(selectedJob.total).toFixed(2) }}</span></div>  
+      <div class="flex justify-between text-sm"><span>advance</span><span class="font-mono">${{ Number(selectedJob.advance).toFixed(2) }}</span></div>  
+      <div class="flex justify-between text-sm"><span>balance</span><span class="font-mono">${{ (Number(selectedJob.total) - Number(selectedJob.advance)).toFixed(2) }}</span></div>  
+      <div class="mt-2 text-xs text-slate-400 italic">{{ selectedJob.amountWords || '—' }}</div>
+
+      <div class="mt-6 flex flex-wrap gap-3 border-t pt-5">  
+        <button v-if="selectedJob.status !== 'completed'" @click="updatestatus(selectedjob, 'completed')" class="px-5 py-2 bg-amber-100 text-amber-700 rounded-full text-sm hover:bg-amber-200"><i class="fas fa-print mr-1"></i> done (print)</button>  
+        <span v-if="selectedJob.status === 'completed'" class="ml-auto text-emerald-600 text-sm font-medium"><i class="fas fa-check-circle mr-1"></i> work completed</span>  
+      </div>  
+    </div>  
+  </div>  
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>  
+<script src="js/auth.js"></script>  
+<script>  
+guard('printer');
+
+new Vue({  
+  el: '#app',  
+  data: {  
+    jobs: [],  
+    selectedJob: null  
+  },  
+  computed: {  
+    filteredJobs() { return this.jobs; }  
+  },  
+  methods: {  
+    async loadJobs() { this.jobs = await api('/jobs'); },  
+    async updateStatus(job, status) {  
+      await api(`/jobs/${job.id}/status`, 'PATCH', { status });  
+      this.selectedJob = null;  
+      this.loadJobs();  
+    }  
+  },  
+  mounted() {  
+    this.loadJobs();  
+  }  
+});  
+</script>  
+</body>  
+</html>  

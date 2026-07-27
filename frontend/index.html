@@ -1,0 +1,81 @@
+<!DOCTYPE html>  
+<html lang="en"><head>  
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>eTap · login</title>  
+<script src="https://cdn.tailwindcss.com"></script>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+<style>body{background:#f4f7fc}</style>  
+</head>  
+<body class="min-h-screen flex items-center justify-center p-6">  
+<div id="app" class="w-full max-w-md">  
+  <div class="bg-white/80 backdrop-blur rounded-3xl p-8 shadow-2xl border border-white/40">  
+    <div class="text-center mb-6">  
+      <i class="fas fa-layer-group text-4xl text-indigo-500"></i>  
+      <h1 class="text-2xl font-light mt-2">eTap <span class="font-medium text-indigo-600">jobs</span></h1>  
+      <p class="text-sm text-slate-400">{{ mode==='login' ? 'sign in to continue' : 'create your account' }}</p>  
+    </div>
+
+    <div v-if="mode==='signup'" class="mb-3">  
+      <label class="text-sm text-slate-600">name</label>  
+      <input v-model="form.name" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 mt-1">  
+    </div>  
+    <div class="mb-3">  
+      <label class="text-sm text-slate-600">email</label>  
+      <input v-model="form.email" type="email" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 mt-1">  
+    </div>  
+    <div class="mb-3">  
+      <label class="text-sm text-slate-600">password</label>  
+      <input v-model="form.password" type="password" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 mt-1">  
+    </div>  
+    <div v-if="mode==='signup'" class="mb-4">  
+      <label class="text-sm text-slate-600">role</label>  
+      <select v-model="form.role" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 mt-1">  
+        <option value="admin">Admin</option>  
+        <option value="designer">Designer</option>  
+        <option value="printer">Printer</option>  
+        <option value="delivery">Delivery</option>  
+      </select>  
+    </div>
+
+    <p v-if="error" class="text-rose-500 text-sm mb-3">{{ error }}</p>
+
+    <button @click="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium shadow-lg shadow-indigo-200">  
+      {{ mode==='login' ? 'login' : 'sign up' }}  
+    </button>
+
+    <p class="text-center text-sm text-slate-500 mt-4">  
+      {{ mode==='login' ? "no account?" : "have an account?" }}  
+      <a @click="toggle" class="text-indigo-600 cursor-pointer font-medium">  
+        {{ mode==='login' ? 'sign up' : 'login' }}  
+      </a>  
+    </p>  
+  </div>  
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>  
+<script src="js/auth.js"></script>  
+<script>  
+new Vue({  
+  el: '#app',  
+  data: {  
+    mode: 'login',  
+    form: { name:'', email:'', password:'', role:'admin' },  
+    error: ''  
+  },  
+  methods: {  
+    toggle() { this.mode = this.mode === 'login' ? 'signup' : 'login'; this.error=''; },  
+    async submit() {  
+      this.error = '';  
+      const path = this.mode === 'login' ? '/auth/login' : '/auth/signup';  
+      const res = await api(path, 'POST', this.form);  
+      if (res.token) { saveSession(res.token, res.user); routeByRole(res.user.role); }  
+      else this.error = res.message || 'Something went wrong';  
+    }  
+  },  
+  mounted() {  
+    const u = getUser();  
+    if (u && getToken()) routeByRole(u.role); // already logged in  
+  }  
+});  
+</script>  
+</body></html>  

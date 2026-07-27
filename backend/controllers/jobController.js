@@ -1,0 +1,71 @@
+const { Job } = require('../models');
+
+// status a role is allowed to see  
+const roleFilter = {  
+  admin:    null, // sees all  
+  designer: ['design', 'pending'],  
+  printer:  ['printer', 'design'],  
+  delivery: ['completed'],  
+};
+
+exports.getJobs = async (req, res) => {  
+  try {  
+    const allowed = roleFilter[req.user.role];  
+    const where = allowed ? { status: allowed } : {};  
+    const jobs = await Job.findAll({ where, order: [['id', 'DESC']] });  
+    res.json(jobs);  
+  } catch (e) {  
+    res.status(500).json({ message: e.message });  
+  }  
+};
+
+exports.createJob = async (req, res) => {  
+  try {  
+    const b = req.body;  
+    const items = (b.items || []).filter((i) => i.name?.trim());  
+    if (!items.length) return res.status(400).json({ message: 'Add at least one item' });
+
+    const subtotal = items.reduce((s, i) => s + (i.qty || 0) * (i.price || 0), 0);  
+    const job = await Job.create({  
+      customer: b.customer || 'anonymous',  
+      orderNo: b.orderNo,  
+      jobDate: b.date || new Date(),  
+      dueDate: b.dueDate,  
+      items,  
+      subtotal,  
+      total: subtotal,  
+      advance: b.advance || 0,  
+      amountWords: b.amountWords,  
+      status: 'pending',  
+      createdBy: req.user.id,  
+    });  
+    res.status(201).json(job);  
+  } catch (e) {  
+    res.status(500).json({ message: e.message });  
+  }  
+};
+
+exports.updateStatus = async (req, res) => {  
+  try {  
+    const job = await Job.findByPk(req.params.id);  
+    if (!job) return res.status(404).json({ message: 'Not found' });  
+    job.status = req.body.status;  
+    await job.save();  
+    res.json(job);  
+  } catch (e) {  
+    res.status(500).json({ message: e.message });  
+  }  
+};
+
+exports.updateDelivery = async (req, res) => {  
+  try {  
+    const job = await Job.findByPk(req.params.id);  
+    if (!job) return res.status(404).json({ message: 'Not found' });  
+    const { zone, building, street } = req.body;  
+    Object.assign(job, { zone, building, street });  
+    await job.save();  
+    res.json(job);  
+  } catch (e) {  
+    res.status(500).json({ message: e.message });  
+  }  
+};  
