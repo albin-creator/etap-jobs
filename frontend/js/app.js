@@ -63,7 +63,7 @@ new Vue({
   methods: {  
     async loadJobs() {  
       try {  
-        this.jobs = await api('/api/jobs');  
+        this.jobs = await api('/jobs');  
       } catch (e) {  
         console.error(e);  
       }  
@@ -85,7 +85,7 @@ new Vue({
         return;  
       }
 
-      const res = await api('/api/jobs', 'POST', payload);  
+      const res = await api('/jobs', 'POST', payload);  
       if (res.id) {  
         // reset form  
         this.newJob = {  
@@ -103,7 +103,7 @@ new Vue({
     },
 
     async updateStatus(job, status) {  
-      await api(`/api/jobs/${job.id}/status`, 'PATCH', { status });  
+      await api(`/jobs/${job.id}/status`, 'PATCH', { status });  
       this.selectedJob = null;  
       this.loadJobs();  
     }  
