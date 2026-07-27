@@ -61,6 +61,12 @@ new Vue({
   },
 
   methods: {  
+
+    logout() {
+    localStorage.clear();
+    location.href = '/index.html';
+    },
+
     async loadJobs() {  
       try {  
         this.jobs = await api('/jobs');  
