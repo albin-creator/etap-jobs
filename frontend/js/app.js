@@ -103,7 +103,7 @@ new Vue({
     },
 
     async updateStatus(job, status) {  
-      await api(`/jobs/${job.id}/status`, 'PATCH', { status });  
+      await api(`/api/jobs/${job.id}/status`, 'PATCH', { status });  
       this.selectedJob = null;  
       this.loadJobs();  
     }  
