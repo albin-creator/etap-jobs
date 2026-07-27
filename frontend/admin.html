@@ -169,17 +169,17 @@ new Vue({
     amountWords() { const v=Math.round(this.total); return v===0?'zero':numberToWords(v)+' dollars'; }  
   },  
   methods: {  
-    async loadJobs() { this.jobs = await api('/api/jobs'); },  
+    async loadJobs() { this.jobs = await api('/jobs'); },  
     async createJob() {  
       const payload = { ...this.newJob, subtotal:this.subtotal, total:this.total, amountWords:this.amountWords };  
-      const res = await api('/api/jobs','POST',payload);  
+      const res = await api('/jobs','POST',payload);  
       if (res.id) {  
         this.newJob = { customer:'', orderNo:'', date:new Date().toISOString().slice(0,10), dueDate:'', items:[{name:'',qty:1,unit:'',price:0}], advance:0 };  
         this.loadJobs();  
       } else alert(res.message || 'error');  
     },  
     async updateStatus(job, status) {  
-      await api(`/api/jobs/${job.id}/status`,'PATCH',{ status });  
+      await api(`/jobs/${job.id}/status`,'PATCH',{ status });  
       this.selectedJob = null;  
       this.loadJobs();  
     }  
