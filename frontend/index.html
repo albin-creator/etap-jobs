@@ -66,7 +66,7 @@ new Vue({
     toggle() { this.mode = this.mode === 'login' ? 'signup' : 'login'; this.error=''; },  
     async submit() {  
       this.error = '';  
-      const path = this.mode === 'login' ? '/auth/login' : '/auth/signup';  
+      const path = this.mode === 'login' ? '/api/auth/login' : '/api/auth/signup';  
       const res = await api(path, 'POST', this.form);  
       if (res.token) { saveSession(res.token, res.user); routeByRole(res.user.role); }  
       else this.error = res.message || 'Something went wrong';  

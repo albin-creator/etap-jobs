@@ -63,7 +63,7 @@ new Vue({
   methods: {  
     async loadJobs() {  
       try {  
-        this.jobs = await api('/jobs');  
+        this.jobs = await api('/api/jobs');  
       } catch (e) {  
         console.error(e);  
       }  
