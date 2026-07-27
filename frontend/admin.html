@@ -169,7 +169,7 @@ new Vue({
     amountWords() { const v=Math.round(this.total); return v===0?'zero':numberToWords(v)+' dollars'; }  
   },  
   methods: {  
-    async loadJobs() { this.jobs = await api('/api/jobs'); },  
+    async loadJobs() { this.jobs = await api('/jobs'); },  
     async createJob() {  
       const payload = { ...this.newJob, subtotal:this.subtotal, total:this.total, amountWords:this.amountWords };  
       const res = await api('/jobs','POST',payload);  

@@ -95,7 +95,7 @@ new Vue({
     filteredJobs() { return this.jobs; }  
   },  
   methods: {  
-    async loadJobs() { this.jobs = await api('/api/jobs'); },  
+    async loadJobs() { this.jobs = await api('/jobs'); },  
     async updateStatus(job, status) {  
       await api(`/jobs/${job.id}/status`, 'PATCH', { status });  
       this.selectedJob = null;  
