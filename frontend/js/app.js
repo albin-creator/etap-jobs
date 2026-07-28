@@ -161,6 +161,8 @@ new Vue({
     if (!this.newJob.date) {  
       this.newJob.date = new Date().toISOString().slice(0, 10);  
     }  
+
+    this.getNextOrderNumber(); 
     this.loadJobs();  
 
      // 🔥 SOCKET REAL TIME
