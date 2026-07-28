@@ -291,51 +291,57 @@
         </div>
 
         <!-- delivery status -->
-        <div class="mt-6 border-t pt-5">
+        <div class="mt-6 flex flex-wrap gap-3 border-t pt-5">
 
-          <span class="text-sm font-medium text-slate-600">
-            <i class="fas fa-truck mr-1"></i>
-            delivery status
-          </span>
-
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+          <template v-if="role==='admin'">
 
             <button @click="updateDeliveryStatus(selectedJob, 'collect_from_office')"
-              class="px-3 py-2 rounded-lg text-sm border" :class="selectedJob.deliveryStatus === 'collect_from_office' 
-        ? 'bg-indigo-600 text-white' 
-        : 'bg-white text-slate-600'">
+              class="px-5 py-2 bg-rose-100 text-rose-700 rounded-full text-sm hover:bg-rose-200">
 
-              collect office
+              <i class="fas fa-building mr-1"></i>
+              collect from office
+
             </button>
 
 
             <button @click="updateDeliveryStatus(selectedJob, 'collect_card')"
-              class="px-3 py-2 rounded-lg text-sm border" :class="selectedJob.deliveryStatus === 'collect_card' 
-        ? 'bg-indigo-600 text-white' 
-        : 'bg-white text-slate-600'">
+              class="px-5 py-2 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200">
 
+              <i class="fas fa-credit-card mr-1"></i>
               collect card
+
             </button>
 
 
-            <button @click="updateDeliveryStatus(selectedJob, 'cash')" class="px-3 py-2 rounded-lg text-sm border"
-              :class="selectedJob.deliveryStatus === 'cash' 
-        ? 'bg-indigo-600 text-white' 
-        : 'bg-white text-slate-600'">
+            <button @click="updateDeliveryStatus(selectedJob, 'cash')"
+              class="px-5 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm hover:bg-emerald-200">
 
+              <i class="fas fa-money-bill mr-1"></i>
               cash
+
             </button>
 
 
             <button @click="updateDeliveryStatus(selectedJob, 'no_delivery')"
-              class="px-3 py-2 rounded-lg text-sm border" :class="selectedJob.deliveryStatus === 'no_delivery' 
-        ? 'bg-red-500 text-white' 
-        : 'bg-white text-slate-600'">
+              class="px-5 py-2 bg-slate-100 text-slate-600 rounded-full text-sm hover:bg-slate-200">
 
+              <i class="fas fa-ban mr-1"></i>
               no delivery
+
             </button>
 
-          </div>
+
+          </template>
+
+
+          <span v-if="selectedJob.deliveryStatus" class="ml-auto text-indigo-600 text-sm font-medium">
+
+            <i class="fas fa-truck mr-1"></i>
+
+            {{ selectedJob.deliveryStatus.replaceAll('_',' ') }}
+
+          </span>
+
 
         </div>
 
