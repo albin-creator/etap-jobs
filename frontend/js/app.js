@@ -57,7 +57,7 @@ new Vue({
     },  
     amountWords() {  
       const val = Math.round(this.total);  
-      return val === 0 ? 'zero' : numberToWords(val) + ' dollars';  
+      return val === 0 ? 'zero' : numberToWords(val) + ' riyals';  
     }  
   },
 
