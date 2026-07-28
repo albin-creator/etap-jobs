@@ -249,3 +249,46 @@ message:e.message
 
 
 };
+
+
+
+exports.updateDeliveryStatus = async(req,res)=>{
+
+try{
+
+const job = await Job.findByPk(req.params.id);
+
+
+if(!job){
+return res.status(404).json({
+message:'Job not found'
+});
+}
+
+
+job.deliveryStatus = req.body.deliveryStatus;
+
+
+await job.save();
+
+
+
+const io=req.app.get('io');
+
+io.emit('jobUpdated',job);
+
+
+
+res.json(job);
+
+
+
+}catch(e){
+
+res.status(500).json({
+message:e.message
+});
+
+}
+
+};

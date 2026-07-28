@@ -7,4 +7,9 @@ router.get('/', c.getJobs);
 router.post('/', restrictTo('admin'), c.createJob);  
 router.patch('/:id/status', restrictTo('admin', 'designer', 'printer'), c.updateStatus);  
 router.patch('/:id/delivery', restrictTo('delivery'), c.updateDelivery);  
+router.patch(
+'/:id/delivery-status',
+restrictTo('delivery'),
+c.updateDeliveryStatus
+);
 module.exports = router;  

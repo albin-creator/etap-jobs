@@ -18,6 +18,16 @@ const Job = sequelize.define('Job', {
   zone:      DataTypes.STRING,  
   building:  DataTypes.STRING,  
   street:    DataTypes.STRING,  
+  deliveryStatus: {
+  type: DataTypes.ENUM(
+    'collect_from_office',
+    'collect_card',
+    'cash',
+    'no_delivery'
+  ),
+  field: 'delivery_status',
+  allowNull: true
+  },
   createdBy: { type: DataTypes.INTEGER, field: 'created_by' },  
 }, { tableName: 'jobs', underscored: true, timestamps: true, updatedAt: false });
 
