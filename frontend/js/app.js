@@ -93,6 +93,19 @@ new Vue({
       }  
     },
 
+    async getNextOrderNumber() {
+  try {
+    const res = await api('/jobs/next-order-number');
+
+    if (res.orderNo) {
+      this.newJob.orderNo = res.orderNo;
+    }
+
+  } catch (e) {
+    console.error("Order number error:", e);
+  }
+},
+
     async createJob() {  
       const payload = {  
         customer: this.newJob.customer,  
@@ -156,6 +169,7 @@ new Vue({
 
       console.log("New job:",job);
 
+      this.getNextOrderNumber();
       this.loadJobs();
 
   });

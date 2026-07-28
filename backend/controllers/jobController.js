@@ -318,3 +318,38 @@ message:e.message
 }
 
 };
+
+
+exports.getNextOrderNumber = async (req, res) => {
+  try {
+    const year = new Date().getFullYear();
+
+    const lastJob = await Job.findOne({
+      where: {
+        orderNo: {
+          [Op.like]: `ORD-${year}-%`
+        }
+      },
+      order: [['createdAt', 'DESC']]
+    });
+
+    let nextNumber = 1;
+
+    if (lastJob && lastJob.orderNo) {
+      const lastNumber = parseInt(lastJob.orderNo.split('-')[2]);
+      nextNumber = lastNumber + 1;
+    }
+
+    const padded = String(nextNumber).padStart(3, '0');
+
+    res.json({
+      orderNo: `ORD-${year}-${padded}`
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Failed to generate order number'
+    });
+  }
+};

@@ -91,7 +91,7 @@
             class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white/70 focus:ring-2 focus:ring-indigo-300 outline-none transition">
         </div>
         <div><label class="block text-sm font-medium text-slate-600 mb-1">order no</label><input
-            :value="newJob.orderNo || 'Auto Generated'" readonly
+            v-model="newJob.orderNo" readonly
             class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-100">
         </div>
         <div><label class="block text-sm font-medium text-slate-600 mb-1">date</label><input type="date"
