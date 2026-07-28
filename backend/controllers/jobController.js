@@ -4,8 +4,8 @@ const { Job } = require('../models');
 // status a role is allowed to see
 const roleFilter = {
   admin: null,
-  designer: ['design', 'pending'],
-  printer: ['printer', 'design'],
+  designer: ['design'],
+  printer: ['printer'],
   delivery: ['completed'],
 };
 
