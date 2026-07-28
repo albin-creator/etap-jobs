@@ -1,4 +1,3 @@
-/* ---------- admin panel logic ---------- */
 
 // redirect if not admin  
 guard('admin');
@@ -62,6 +61,26 @@ new Vue({
   },
 
   methods: {  
+
+
+    async saveDelivery(job){
+
+  await api(
+    `/jobs/${job.id}/delivery`,
+    'PATCH',
+    {
+      zone: job.zone,
+      building: job.building,
+      street: job.street
+    }
+  );
+
+
+  this.selectedJob = null;
+
+  this.loadJobs();
+
+  },
 
     openJob(job) {
         console.log("Clicked job:", job);

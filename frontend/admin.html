@@ -86,7 +86,7 @@
             v-model="newJob.customer" placeholder="e.g. Sarah Chen"
             class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white/70 focus:ring-2 focus:ring-indigo-300 outline-none transition">
         </div>
-        <div><label class="block text-sm font-medium text-slate-600 mb-1">Contact number</label><input
+        <div><label class="block text-sm font-medium text-slate-600 mb-1">contact number</label><input
             v-model="newJob.contact" placeholder="e.g. 123456789"
             class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white/70 focus:ring-2 focus:ring-indigo-300 outline-none transition">
         </div>
@@ -241,6 +241,54 @@
         <div class="flex justify-between text-sm"><span>balance</span><span class="font-mono">QAR{{
             ((selectedJob.total||0) - (selectedJob.advance||0)).toFixed(2) }}</span></div>
         <div class="mt-2 text-xs text-slate-400 italic">{{ selectedJob.amountWords || 'amount in words' }}</div>
+
+        <!-- delivery details -->
+        <div class="mt-6 border-t pt-5">
+          <span class="text-sm font-medium text-slate-600">
+            <i class="fas fa-map-pin mr-1"></i>
+            delivery details
+          </span>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+
+            <div>
+              <label class="text-xs text-slate-500">
+                zone no
+              </label>
+              <input v-model="selectedJob.zone" placeholder="zone"
+                class="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-sm">
+            </div>
+
+
+            <div>
+              <label class="text-xs text-slate-500">
+                building
+              </label>
+              <input v-model="selectedJob.building" placeholder="building"
+                class="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-sm">
+            </div>
+
+
+            <div>
+              <label class="text-xs text-slate-500">
+                street
+              </label>
+              <input v-model="selectedJob.street" placeholder="street"
+                class="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-sm">
+            </div>
+
+          </div>
+
+
+          <button @click="saveDelivery(selectedJob)"
+            class="mt-4 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm">
+
+            <i class="fas fa-save mr-1"></i>
+            save delivery details
+
+          </button>
+
+        </div>
 
         <!-- role specific actions -->
         <div class="mt-6 flex flex-wrap gap-3 border-t pt-5">
