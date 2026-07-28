@@ -63,19 +63,20 @@ new Vue({
   methods: {  
 
     openJob(job) {
-      console.log("Clicked job:", job);
-      this.selectedJob = {
-    ...job,
-    total: Number(job.total || 0),
-    subtotal: Number(job.subtotal || 0),
-    advance: Number(job.advance || 0),
-    items: (job.items || []).map(item => ({
-      ...item,
-      qty: Number(item.qty || 0),
-      price: Number(item.price || 0)
-    }))
-  };
-  },
+        console.log("Clicked job:", job);
+
+        this.selectedJob = {
+            ...job,
+            total: Number(job.total || 0),
+            subtotal: Number(job.subtotal || 0),
+            advance: Number(job.advance || 0),
+            items: (job.items || []).map(item => ({
+                ...item,
+                qty: Number(item.qty || 0),
+                price: Number(item.price || 0)
+            }))
+        };
+    },
     
 
     logout() {
