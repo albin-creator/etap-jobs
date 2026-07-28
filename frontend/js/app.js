@@ -37,7 +37,7 @@ new Vue({
       orderNo: '',  
       date: '',  
       dueDate: '',  
-      items: [{ name: '', qty: 1, unit: '', price: 0 }],  
+      items: [{ name: '', qty: 1, price: 0 }],  
       advance: 0  
     },  
     jobs: [],  
@@ -71,10 +71,10 @@ new Vue({
             subtotal: Number(job.subtotal || 0),
             advance: Number(job.advance || 0),
             items: (job.items || []).map(item => ({
-                ...item,
-                qty: Number(item.qty || 0),
-                price: Number(item.price || 0)
-            }))
+            name: item.name,
+            qty: Number(item.qty || 0),
+            price: Number(item.price || 0)
+          }))
         };
     },
     
@@ -99,7 +99,13 @@ new Vue({
         orderNo: this.newJob.orderNo,  
         date: this.newJob.date,  
         dueDate: this.newJob.dueDate,  
-        items: this.newJob.items.filter(it => it.name.trim() !== ''),  
+        items: this.newJob.items
+        .filter(it => it.name.trim() !== '')
+        .map(it => ({
+           name: it.name,
+           qty: it.qty,
+           price: it.price
+         })),  
         advance: this.newJob.advance || 0,  
         amountWords: this.amountWords  
       };
@@ -117,7 +123,7 @@ new Vue({
           orderNo: '',  
           date: new Date().toISOString().slice(0, 10),  
           dueDate: '',  
-          items: [{ name: '', qty: 1, unit: '', price: 0 }],  
+          items: [{ name: '', qty: 1, price: 0 }],  
           advance: 0  
         };  
         this.loadJobs();  
