@@ -11,7 +11,7 @@ router.patch('/:id/status', restrictTo('admin', 'designer', 'printer'), c.update
 router.patch('/:id/delivery', restrictTo('admin'), c.updateDelivery);
 router.patch(
 '/:id/delivery-status',
-restrictTo('delivery'),
+restrictTo('admin'),
 c.updateDeliveryStatus
 );
 router.get('/next-order-number', protect, c.getNextOrderNumber);

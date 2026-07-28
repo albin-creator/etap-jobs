@@ -82,6 +82,24 @@ new Vue({
 
   },
 
+  async updateDeliveryStatus(job, status){
+
+  await api(
+    `/jobs/${job.id}/delivery-status`,
+    'PATCH',
+    {
+      deliveryStatus: status
+    }
+  );
+
+  job.deliveryStatus = status; // instant UI update
+
+  this.selectedJob = null;
+
+  this.loadJobs();
+
+  },
+
     openJob(job) {
         console.log("Clicked job:", job);
 
