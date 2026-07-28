@@ -159,7 +159,7 @@
           view</span>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        <div v-for="job in filteredJobs" :key="job.id" @click="selectedJob = job"
+        <div v-for="job in filteredJobs" :key="job.id" @click="openJob(job)"
           class="glass-card elegant-shadow rounded-2xl p-5 card-hover cursor-pointer bg-white/80 backdrop-blur-sm border border-white/50">
           <div class="flex items-start justify-between">
             <div class="flex items-center gap-3">

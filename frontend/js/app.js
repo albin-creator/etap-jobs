@@ -1,7 +1,7 @@
 /* ---------- admin panel logic ---------- */
 
 // redirect if not admin  
-guard('admin');
+//guard('admin');
 
 // number-to-words helper (same as before)  
 function numberToWords(num) {  
@@ -62,12 +62,18 @@ new Vue({
 
   methods: {  
 
+    openJob(job) {
+      console.log("Clicked job:", job);
+      this.selectedJob = { ...job };
+    },
+
     logout() {
     localStorage.clear();
     location.href = '/index.html';
     },
 
     async loadJobs() {  
+      console.log("Jobs:", this.jobs);
       try {  
         this.jobs = await api('/jobs');  
       } catch (e) {  
@@ -116,6 +122,9 @@ new Vue({
   },
 
   mounted() {  
+
+    console.log("Vue mounted");
+
     // set default dates  
     if (!this.newJob.date) {  
       this.newJob.date = new Date().toISOString().slice(0, 10);  
