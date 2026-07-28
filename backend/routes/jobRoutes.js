@@ -1,5 +1,5 @@
 const router = require('express').Router();  
-const { protect, restrictTo, auth } = require('../middleware/auth');  
+const { protect, restrictTo } = require('../middleware/auth');  
 const c = require('../controllers/jobController');
 const { getNextOrderNumber } = require('../controllers/jobController');
 
@@ -14,5 +14,5 @@ router.patch(
 restrictTo('delivery'),
 c.updateDeliveryStatus
 );
-router.get('/next-order-number', auth, getNextOrderNumber);
+router.get('/next-order-number', protect, c.getNextOrderNumber);
 module.exports = router;  
