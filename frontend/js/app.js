@@ -75,8 +75,8 @@ new Vue({
       price: Number(item.price || 0)
     }))
   };
-},
-    },
+  },
+    
 
     logout() {
     localStorage.clear();
