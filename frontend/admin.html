@@ -76,6 +76,96 @@
       </div>
     </div>
 
+    <!-- dashboard stats -->
+
+    <div class="glass-card elegant-shadow rounded-3xl p-5 mb-10 bg-white/80">
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+
+
+        <!-- today amount -->
+
+        <div class="p-4 rounded-2xl bg-indigo-50">
+          <div class="text-xs text-slate-500">
+            Total Amount Today
+          </div>
+
+          <div class="text-2xl font-semibold text-indigo-700">
+            QAR {{ todayStats.totalAmount.toFixed(2) }}
+          </div>
+        </div>
+
+
+
+        <!-- admin -->
+
+        <div class="p-4 rounded-2xl bg-indigo-50 text-center">
+
+          <div class="text-xs text-slate-500">
+            Admin
+          </div>
+
+          <div class="text-2xl font-bold text-indigo-700">
+            {{ todayStats.admin }}
+          </div>
+
+        </div>
+
+
+
+        <!-- designer -->
+
+        <div class="p-4 rounded-2xl bg-emerald-50 text-center">
+
+          <div class="text-xs text-slate-500">
+            Designer
+          </div>
+
+          <div class="text-2xl font-bold text-emerald-700">
+            {{ todayStats.designer }}
+          </div>
+
+        </div>
+
+
+
+
+        <!-- printer -->
+
+        <div class="p-4 rounded-2xl bg-amber-50 text-center">
+
+          <div class="text-xs text-slate-500">
+            Printer
+          </div>
+
+          <div class="text-2xl font-bold text-amber-700">
+            {{ todayStats.printer }}
+          </div>
+
+        </div>
+
+
+
+
+        <!-- delivery -->
+
+        <div class="p-4 rounded-2xl bg-rose-50 text-center">
+
+          <div class="text-xs text-slate-500">
+            Delivery
+          </div>
+
+          <div class="text-2xl font-bold text-rose-700">
+            {{ todayStats.delivery }}
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
     <!-- admin panel (create job card) -->
     <div v-if="role==='admin'"
       class="glass-card elegant-shadow rounded-3xl p-6 md:p-8 mb-10 backdrop-blur-sm bg-white/80 border border-white/40">

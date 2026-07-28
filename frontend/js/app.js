@@ -45,19 +45,66 @@ new Vue({
   },
 
   computed: {  
-    filteredJobs() {  
-      return this.jobs;  // admin sees all  
-    },  
-    subtotal() {  
-      return this.newJob.items.reduce((sum, it) => sum + (it.qty || 0) * (it.price || 0), 0);  
-    },  
-    total() {  
-      return this.subtotal;  
-    },  
-    amountWords() {  
-      const val = Math.round(this.total);  
-      return val === 0 ? 'zero' : numberToWords(val) + ' riyals';  
-    }  
+
+  filteredJobs() {  
+    return this.jobs;
+  },  
+
+  subtotal() {  
+    return this.newJob.items.reduce(
+      (sum, it) => sum + (it.qty || 0) * (it.price || 0), 
+      0
+    );  
+  },  
+
+  total() {  
+    return this.subtotal;  
+  },  
+
+  amountWords() {  
+    const val = Math.round(this.total);  
+    return val === 0 ? 'zero' : numberToWords(val) + ' riyals';  
+  },  
+
+
+  todayStats(){
+
+    const today = new Date().toISOString().slice(0,10);
+
+    let totalAmount = 0;
+    let admin = 0;
+    let designer = 0;
+    let printer = 0;
+    let delivery = 0;
+
+
+    this.jobs.forEach(job=>{
+
+      if(job.jobDate === today || job.date === today){
+        totalAmount += Number(job.total || 0);
+      }
+
+      if(job.status === 'pending') admin++;
+
+      if(job.status === 'design') designer++;
+
+      if(job.status === 'printer') printer++;
+
+      if(job.status === 'completed') delivery++;
+
+    });
+
+
+    return {
+      totalAmount,
+      admin,
+      designer,
+      printer,
+      delivery
+    };
+
+  }
+
   },
 
   methods: {  
