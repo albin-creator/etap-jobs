@@ -1,7 +1,7 @@
 /* ---------- admin panel logic ---------- */
 
 // redirect if not admin  
-//guard('admin');
+guard('admin');
 
 // number-to-words helper (same as before)  
 function numberToWords(num) {  
