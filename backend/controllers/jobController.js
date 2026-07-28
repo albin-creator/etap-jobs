@@ -1,4 +1,5 @@
 const { Job } = require('../models');
+const { Op } = require('sequelize');
 
 
 // status a role is allowed to see
@@ -76,6 +77,29 @@ const subtotal = items.reduce(
 );
 
 
+// 🔹 AUTO ORDER NUMBER
+const year = new Date().getFullYear();
+
+const lastJob = await Job.findOne({
+  where: {
+    orderNo: {
+      [Op.like]: `ORD-${year}-%`
+    }
+  },
+  order: [['createdAt', 'DESC']]
+});
+
+let nextNumber = 1;
+
+if (lastJob && lastJob.orderNo) {
+  const lastNumber = parseInt(lastJob.orderNo.split('-')[2]);
+  nextNumber = lastNumber + 1;
+}
+
+const padded = String(nextNumber).padStart(3, '0');
+
+const orderNo = `ORD-${year}-${padded}`;
+
 
 const job = await Job.create({
 
@@ -86,6 +110,8 @@ orderNo:b.orderNo,
 jobDate:b.date || new Date(),
 
 dueDate:b.dueDate,
+
+orderNo,
 
 items,
 

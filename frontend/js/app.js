@@ -96,7 +96,6 @@ new Vue({
     async createJob() {  
       const payload = {  
         customer: this.newJob.customer,  
-        orderNo: this.newJob.orderNo,  
         date: this.newJob.date,  
         dueDate: this.newJob.dueDate,  
         items: this.newJob.items

@@ -3,7 +3,11 @@ const sequelize = require('../config/db');
 
 const Job = sequelize.define('Job', {  
   customer:    DataTypes.STRING,  
-  orderNo:     { type: DataTypes.STRING, field: 'order_no' },  
+  orderNo: { 
+  type: DataTypes.STRING, 
+  unique: true,
+  field: 'order_no' 
+  },
   jobDate:     { type: DataTypes.DATEONLY, field: 'job_date' },  
   dueDate:     { type: DataTypes.DATEONLY, field: 'due_date' },  
   items:       { type: DataTypes.JSONB, defaultValue: [] },  
