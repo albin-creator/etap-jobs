@@ -105,6 +105,8 @@ const job = await Job.create({
 
 customer:b.customer || 'anonymous',
 
+contact:b.contact || null,
+
 orderNo:b.orderNo,
 
 jobDate:b.date || new Date(),

@@ -34,6 +34,7 @@ new Vue({
     role: 'admin',  
     newJob: {  
       customer: '',  
+      contact: '',
       orderNo: '',  
       date: '',  
       dueDate: '',  
@@ -109,6 +110,7 @@ new Vue({
     async createJob() {  
       const payload = {  
         customer: this.newJob.customer,  
+        contact: this.newJob.contact,
         date: this.newJob.date,  
         dueDate: this.newJob.dueDate,  
         items: this.newJob.items
