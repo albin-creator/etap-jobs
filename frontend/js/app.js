@@ -121,5 +121,27 @@ new Vue({
       this.newJob.date = new Date().toISOString().slice(0, 10);  
     }  
     this.loadJobs();  
+
+     // 🔥 SOCKET REAL TIME
+  const socket = io("https://etap-jobs-api.onrender.com");
+
+
+  socket.on('jobCreated', (job)=>{
+
+      console.log("New job:",job);
+
+      this.loadJobs();
+
+  });
+
+
+  socket.on('jobUpdated',(job)=>{
+
+      console.log("Job updated:",job);
+
+      this.loadJobs();
+
+  });
+
   }  
 });  
