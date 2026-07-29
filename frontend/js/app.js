@@ -88,7 +88,14 @@ new Vue({
 
   todayStats(){
 
-    const today = new Date().toLocaleDateString('en-CA');
+    const now = new Date();
+
+    const today =
+      now.getFullYear() +
+      '-' +
+      String(now.getMonth() + 1).padStart(2,'0') +
+      '-' +
+      String(now.getDate()).padStart(2,'0');
 
     let totalAmount = 0;
     let admin = 0;
@@ -99,7 +106,7 @@ new Vue({
 
     this.jobs.forEach(job=>{
 
-      if(job.jobDate === today || job.date === today){
+      if(job.jobDate === today){
         totalAmount += Number(job.total || 0);
       }
 
