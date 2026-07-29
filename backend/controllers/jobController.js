@@ -23,11 +23,18 @@ exports.getJobs = async (req, res) => {
     if (req.user.role === 'delivery') {
 
       where = {
-        status: 'ready',
-        deliveryStatus: {
-          [Op.ne]: 'delivered'
-        }
-      };
+  status: 'ready',
+  [Op.or]: [
+    {
+      deliveryStatus: null
+    },
+    {
+      deliveryStatus: {
+        [Op.ne]: 'delivered'
+      }
+    }
+  ]
+};
 
     } else if (allowed) {
 
