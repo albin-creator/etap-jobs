@@ -46,9 +46,28 @@ new Vue({
 
   computed: {  
 
-  filteredJobs() {  
-    return this.jobs;
-  },  
+  filteredJobs(){
+
+  if(this.role === 'designer'){
+    return this.jobs.filter(job => job.status === 'design');
+  }
+
+
+  if(this.role === 'printer'){
+    return this.jobs.filter(job => job.status === 'printer');
+  }
+
+
+  if(this.role === 'delivery'){
+    return this.jobs.filter(job =>
+      job.status === 'ready'
+    );
+  }
+
+
+  return this.jobs;
+
+},
 
   subtotal() {  
     return this.newJob.items.reduce(
