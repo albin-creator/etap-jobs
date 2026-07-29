@@ -88,7 +88,7 @@ new Vue({
 
   todayStats(){
 
-    const today = new Date().toISOString().slice(0,10);
+    const today = new Date().toLocaleDateString('en-CA');
 
     let totalAmount = 0;
     let admin = 0;
