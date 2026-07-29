@@ -198,6 +198,30 @@
             </h4>
 
 
+            <div class="grid grid-cols-2 gap-3 mt-4">
+
+              <div>
+                <label class="text-xs text-slate-400">
+                  amount
+                </label>
+
+                <input v-model="selectedJob.deliveryAmount" type="number" class="w-full border rounded-lg px-3 py-2"
+                  placeholder="Amount">
+              </div>
+
+
+              <div>
+                <label class="text-xs text-slate-400">
+                  balance
+                </label>
+
+                <input v-model="selectedJob.deliveryBalance" type="number" class="w-full border rounded-lg px-3 py-2"
+                  placeholder="Balance">
+              </div>
+
+            </div>
+
+
             <div class="flex gap-3 mt-5">
 
 
@@ -273,7 +297,9 @@
             `/jobs/${job.id}/delivery-status`,
             'PATCH',
             {
-              deliveryStatus: status
+              deliveryStatus: status,
+              deliveryAmount: Number(job.deliveryAmount || 0),
+              deliveryBalance: Number(job.deliveryBalance || 0)
             }
           );
 

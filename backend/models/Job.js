@@ -42,6 +42,17 @@ const Job = sequelize.define('Job', {
   field: 'delivery_status',
   allowNull: true
   },
+  deliveryAmount: {
+  type: DataTypes.DECIMAL(12,2),
+  defaultValue: 0,
+  field: 'delivery_amount'
+},
+
+deliveryBalance: {
+  type: DataTypes.DECIMAL(12,2),
+  defaultValue: 0,
+  field: 'delivery_balance'
+},
   createdBy: { type: DataTypes.INTEGER, field: 'created_by' },  
 }, { tableName: 'jobs', underscored: true, timestamps: true, updatedAt: false });
 

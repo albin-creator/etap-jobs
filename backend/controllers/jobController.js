@@ -316,6 +316,10 @@ message:'Job not found'
 
 job.deliveryStatus = req.body.deliveryStatus;
 
+job.deliveryAmount = req.body.deliveryAmount || 0;
+
+job.deliveryBalance = req.body.deliveryBalance || 0;
+
 
 await job.save();
 
