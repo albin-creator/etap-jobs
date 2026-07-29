@@ -397,14 +397,16 @@
 
           </button>
 
+          <!-- send to delivery -->
+          <button v-if="role==='admin' && selectedJob.status==='ready'" @click="updateStatus(selectedJob,'ready')">
+            <i class="fas fa-truck"></i>
+            send to delivery
+          </button>
+
         </div>
 
 
-        <!-- send to delivery -->
-        <button v-if="role==='admin' && selectedJob.status==='ready'" @click="updateStatus(selectedJob,'ready')">
-          <i class="fas fa-truck"></i>
-          send to delivery
-        </button>
+
 
         <!-- delivery status -->
         <div class="mt-6 flex flex-wrap gap-3 border-t pt-5">
