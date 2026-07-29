@@ -35,7 +35,9 @@ const Job = sequelize.define('Job', {
     'collect_from_office',
     'collect_card',
     'cash',
-    'no_delivery'
+    'no_delivery',
+    'payment_pending',
+    'delivered'
   ),
   field: 'delivery_status',
   allowNull: true

@@ -189,6 +189,62 @@
 
           </div>
 
+
+          <div class="mt-6 border-t pt-5">
+
+            <h4 class="text-sm font-medium text-slate-600 mb-3">
+              <i class="fas fa-money-bill"></i>
+              payment
+            </h4>
+
+
+            <div class="flex gap-3 mt-5">
+
+
+              <button @click="updateDeliveryStatus(selectedJob,'collect_card')"
+                class="px-5 py-2 bg-blue-100 text-blue-700 rounded-full">
+
+                <i class="fas fa-credit-card"></i>
+                Collect Card
+
+              </button>
+
+
+              <button @click="updateDeliveryStatus(selectedJob,'cash')"
+                class="px-5 py-2 bg-green-100 text-green-700 rounded-full">
+
+                <i class="fas fa-money-bill"></i>
+                Cash
+
+              </button>
+
+
+            </div>
+
+
+
+            <div class="flex gap-3 mt-4">
+
+              <button @click="updateDeliveryStatus(selectedJob,'payment_pending')"
+                class="px-5 py-2 bg-yellow-100 text-yellow-700 rounded-full">
+
+                Payment Pending
+
+              </button>
+
+
+              <button @click="updateDeliveryStatus(selectedJob,'delivered')"
+                class="px-5 py-2 bg-indigo-100 text-indigo-700 rounded-full">
+
+                Delivered
+
+              </button>
+
+            </div>
+
+
+          </div>
+
         </div>
       </div>
     </div>
@@ -229,7 +285,7 @@
         },
 
         async loadJobs() {this.jobs = await api('/jobs');},
-        
+
       },
       mounted() {
         this.loadJobs();

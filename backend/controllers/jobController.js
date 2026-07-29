@@ -7,7 +7,7 @@ const roleFilter = {
   admin: null,
   designer: ['design'],
   printer: ['printer'],
-  delivery: ['ready'],
+  delivery: ['ready','payment_pending'],
 };
 
 
@@ -18,27 +18,24 @@ exports.getJobs = async (req, res) => {
 
     const allowed = roleFilter[req.user.role];
 
-    const where = allowed 
-      ? { status: allowed }
-      : {};
+let where = {};
 
+if (req.user.role === 'delivery') {
 
-    const jobs = await Job.findAll({
-      where,
-      order: [['id','DESC']]
-    });
+  where = {
+    status: 'ready',
+    deliveryStatus: {
+      [Op.ne]: 'delivered'
+    }
+  };
 
+} else if (allowed) {
 
-    res.json(jobs);
+  where = {
+    status: allowed
+  };
 
-
-  } catch(e){
-
-    res.status(500).json({
-      message:e.message
-    });
-
-  }
+}
 
 };
 

@@ -7,11 +7,11 @@ const { getNextOrderNumber } = require('../controllers/jobController');
 router.use(protect);  
 router.get('/', c.getJobs);  
 router.post('/', restrictTo('admin'), c.createJob);  
-router.patch('/:id/status', restrictTo('admin', 'designer', 'printer'), c.updateStatus);  
+router.patch('/:id/status', restrictTo('admin', 'designer', 'printer', 'delivery'), c.updateStatus);  
 router.patch('/:id/delivery', restrictTo('admin'), c.updateDelivery);
 router.patch(
 '/:id/delivery-status',
-restrictTo('admin'),
+restrictTo('admin','delivery'),
 c.updateDeliveryStatus
 );
 router.get('/next-order-number', protect, c.getNextOrderNumber);
