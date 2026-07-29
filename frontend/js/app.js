@@ -31,7 +31,6 @@ new Vue({
   el: '#app',  
   data: {  
     role: 'admin',  
-    selectedFilter: 'all',
     newJob: {  
       customer: '',  
       contact: '',
@@ -47,30 +46,9 @@ new Vue({
 
   computed: {  
 
-  filteredJobs() {
-
-  if(this.selectedFilter === 'all'){
+  filteredJobs() {  
     return this.jobs;
-  }
-
-  if(this.selectedFilter === 'design'){
-    return this.jobs.filter(job => job.status === 'design');
-  }
-
-  if(this.selectedFilter === 'printer'){
-    return this.jobs.filter(job => job.status === 'printer');
-  }
-
-  if(this.selectedFilter === 'delivery'){
-    return this.jobs.filter(job =>
-      job.status === 'ready' &&
-      job.deliveryStatus !== 'delivered'
-    );
-  }
-
-  return this.jobs;
-
-},
+  },  
 
   subtotal() {  
     return this.newJob.items.reduce(
@@ -91,7 +69,7 @@ new Vue({
 
   todayStats(){
 
-    const today = new Date().toLocaleDateString('en-CA');
+    const today = new Date().toISOString().slice(0,10);
 
     let totalAmount = 0;
     let admin = 0;
