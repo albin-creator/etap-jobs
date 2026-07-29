@@ -24,7 +24,7 @@ const Job = sequelize.define('Job', {
   advance:     { type: DataTypes.DECIMAL(12, 2), defaultValue: 0 },  
   amountWords: { type: DataTypes.TEXT, field: 'amount_words' },  
   status: {  
-    type: DataTypes.ENUM('pending', 'design', 'printer', 'completed'),  
+    type: DataTypes.ENUM('pending', 'design', 'printer', 'ready', 'completed'),  
     defaultValue: 'pending',  
   },  
   zone:      DataTypes.STRING,  

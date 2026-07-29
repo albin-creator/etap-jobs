@@ -7,7 +7,7 @@ const roleFilter = {
   admin: null,
   designer: ['design'],
   printer: ['printer'],
-  delivery: ['completed'],
+  delivery: ['ready'],
 };
 
 

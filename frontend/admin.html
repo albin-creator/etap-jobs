@@ -277,7 +277,7 @@
               </div>
             </div>
             <span class="badge-pill"
-              :class="job.status==='completed' ? 'bg-emerald-100 text-emerald-700' : job.status==='design' ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700'">{{
+              :class="job.status==='ready' ? 'bg-emerald-100 text-emerald-700' : job.status==='design' ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700'">{{
               job.status || 'pending' }}</span>
           </div>
           <div class="mt-3 text-xs text-slate-500 flex flex-wrap gap-2">
@@ -318,7 +318,7 @@
             <div>{{ selectedJob.orderNo }}</div>
           </div>
           <div><span class="text-slate-400">date</span>
-            <div>{{ selectedJob.date }}</div>
+            <div>{{ selectedJob.jobDate }}</div>
           </div>
           <div><span class="text-slate-400">due</span>
             <div>{{ selectedJob.dueDate }}</div>
@@ -398,6 +398,13 @@
           </button>
 
         </div>
+
+
+        <!-- send to delivery -->
+        <button v-if="role==='admin' && selectedJob.status==='ready'" @click="updateStatus(selectedJob,'ready')">
+          <i class="fas fa-truck"></i>
+          send to delivery
+        </button>
 
         <!-- delivery status -->
         <div class="mt-6 flex flex-wrap gap-3 border-t pt-5">
