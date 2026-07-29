@@ -56,16 +56,16 @@
           admin: admin / pass</span>
       </div>
       <div class="flex gap-2 flex-wrap">
-        <button @click="role='admin'" class="px-5 py-2 rounded-full text-sm font-medium transition"
+        <button @click="selectedFilter='all'" class="px-5 py-2 rounded-full text-sm font-medium transition"
           :class="role==='admin' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'"><i
             class="fas fa-user-cog mr-1.5"></i>Admin</button>
-        <button @click="role='designer'" class="px-5 py-2 rounded-full text-sm font-medium transition"
+        <button @click="selectedFilter='design'" class="px-5 py-2 rounded-full text-sm font-medium transition"
           :class="role==='designer' ? 'bg-emerald-600 text-white shadow-md shadow-emerald-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'"><i
             class="fas fa-paint-brush mr-1.5"></i>Designer</button>
-        <button @click="role='printer'" class="px-5 py-2 rounded-full text-sm font-medium transition"
+        <button @click="selectedFilter='printer'" class="px-5 py-2 rounded-full text-sm font-medium transition"
           :class="role==='printer' ? 'bg-amber-600 text-white shadow-md shadow-amber-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'"><i
             class="fas fa-print mr-1.5"></i>Printer</button>
-        <button @click="role='delivery'" class="px-5 py-2 rounded-full text-sm font-medium transition"
+        <button @click="selectedFilter='delivery'" class="px-5 py-2 rounded-full text-sm font-medium transition"
           :class="role==='delivery' ? 'bg-rose-600 text-white shadow-md shadow-rose-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'"><i
             class="fas fa-truck mr-1.5"></i>Delivery</button>
         <button @click="logout()"
