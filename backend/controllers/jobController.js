@@ -1,7 +1,7 @@
 const { Job } = require('../models');
 const { Op } = require('sequelize');
 
-const items=(b.items || [])
+
 // status a role is allowed to see
 const roleFilter = {
   admin: null,
@@ -53,10 +53,6 @@ try {
 
 
 const b=req.body;
-
-
-const items=(b.items || [])
-.filter(i=>i.name?.trim());
 
 
 
