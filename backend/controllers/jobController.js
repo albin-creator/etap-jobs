@@ -18,24 +18,42 @@ exports.getJobs = async (req, res) => {
 
     const allowed = roleFilter[req.user.role];
 
-let where = {};
+    let where = {};
 
-if (req.user.role === 'delivery') {
+    if (req.user.role === 'delivery') {
 
-  where = {
-    status: 'ready',
-    deliveryStatus: {
-      [Op.ne]: 'delivered'
+      where = {
+        status: 'ready',
+        deliveryStatus: {
+          [Op.ne]: 'delivered'
+        }
+      };
+
+    } else if (allowed) {
+
+      where = {
+        status: allowed
+      };
+
     }
-  };
 
-} else if (allowed) {
 
-  where = {
-    status: allowed
-  };
+    const jobs = await Job.findAll({
+      where,
+      order: [['id','DESC']]
+    });
 
-}
+
+    res.json(jobs);
+
+
+  } catch(e) {
+
+    res.status(500).json({
+      message:e.message
+    });
+
+  }
 
 };
 
