@@ -54,6 +54,8 @@ try {
 
 const b=req.body;
 
+const items = (b.items || [])
+.filter(i => i.name?.trim());
 
 
 if(!items.length){
