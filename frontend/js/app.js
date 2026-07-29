@@ -201,6 +201,7 @@ new Vue({
         .filter(it => it.name.trim() !== '')
         .map(it => ({
            name: it.name,
+           description: it.description,
            qty: it.qty,
            price: it.price
          })),  
@@ -221,7 +222,7 @@ new Vue({
           orderNo: '',  
           date: new Date().toISOString().slice(0, 10),  
           dueDate: '',  
-          items: [{ name: '', qty: 1, price: 0 }],  
+          items: [{ name: '', description:'', qty: 1, price: 0 }],  
           advance: 0  
         };  
         this.loadJobs();  
