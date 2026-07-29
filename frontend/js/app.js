@@ -157,6 +157,7 @@ new Vue({
             advance: Number(job.advance || 0),
             items: (job.items || []).map(item => ({
             name: item.name,
+            description: item.description || '',
             qty: Number(item.qty || 0),
             price: Number(item.price || 0)
           }))
