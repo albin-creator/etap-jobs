@@ -295,18 +295,7 @@ new Vue({
 
       console.log("Job updated:",job);
 
-      // 🔔 Designer notification
-    if(this.role === 'designer' && job.status === 'design'){
-
-        const audio = new Audio('/audio/notification.mp3');
-
-        audio.play()
-        .catch(err => {
-            console.log("Audio blocked:", err);
-        });
-
-    }
-
+      
       this.loadJobs();
 
   });

@@ -55,9 +55,7 @@
       <div class="flex items-center gap-3">
         <span class="bg-emerald-50 text-emerald-700 text-xs px-4 py-1.5 rounded-full border border-emerald-100"><i
             class="fas fa-paint-brush mr-1"></i>designer</span>
-        <button onclick="enableSound()" class="px-4 py-2 bg-indigo-500 text-white rounded">
-          Enable sound
-        </button>
+        
         <button onclick="logout()" class="text-sm text-slate-400 hover:text-rose-500"><i
             class="fas fa-sign-out-alt"></i></button>
       </div>
@@ -188,9 +186,18 @@
 
         const socket = io("https://etap-jobs-api.onrender.com");
 
+        socket.on("jobCreated", (data) => {
 
-        socket.on('jobCreated', () => {
-          this.loadJobs();
+          console.log("New job received:", data);
+
+          // Show browser notification
+          if (Notification.permission === "granted") {
+            new Notification("New Job Assigned", {
+              body: `Customer: ${data.customer || "New Job"}`,
+              icon: "/logo.png"   // optional
+            });
+          }
+
         });
 
 
@@ -199,21 +206,20 @@
         });
 
       }
-    });  
-
-    function enableSound(){
-
-    const audio = new Audio('/audio/notification.mp3');
-
-    audio.play()
-    .then(()=>{
-        console.log("Sound enabled");
-    })
-    .catch(err=>{
-        console.log(err);
     });
 
-   }
+    function requestNotificationPermission() {
+      if ("Notification" in window) {
+        if (Notification.permission === "default") {
+          Notification.requestPermission().then(permission => {
+            console.log("Permission:", permission);
+          });
+        }
+      }
+    }
+
+    // call on page load
+    requestNotificationPermission();
   </script>
 </body>
 
