@@ -55,6 +55,9 @@
       <div class="flex items-center gap-3">
         <span class="bg-emerald-50 text-emerald-700 text-xs px-4 py-1.5 rounded-full border border-emerald-100"><i
             class="fas fa-paint-brush mr-1"></i>designer</span>
+        <button onclick="enableSound()" class="hidden">
+          Enable sound
+        </button>
         <button onclick="logout()" class="text-sm text-slate-400 hover:text-rose-500"><i
             class="fas fa-sign-out-alt"></i></button>
       </div>
@@ -92,7 +95,8 @@
           </div>
           <div class="mt-2 text-sm text-slate-600 line-clamp-1"><i class="fas fa-cube mr-1 text-slate-300"></i> {{
             job.items?.length || 0 }} items</div>
-          <div class="mt-3 text-right font-mono text-sm font-medium text-indigo-600">QAR{{ Number(job.total).toFixed(2) }}
+          <div class="mt-3 text-right font-mono text-sm font-medium text-indigo-600">QAR{{ Number(job.total).toFixed(2)
+            }}
           </div>
           <div class="mt-2 flex gap-1 flex-wrap text-[10px]">
             <span v-for="it in job.items?.slice(0,2)" class="bg-slate-100 px-2 py-0.5 rounded-full">{{ it.name }} ({{
@@ -196,6 +200,20 @@
 
       }
     });  
+
+    function enableSound(){
+
+    const audio = new Audio('/audio/notification.mp3');
+
+    audio.play()
+    .then(()=>{
+        console.log("Sound enabled");
+    })
+    .catch(err=>{
+        console.log(err);
+    });
+
+   }
   </script>
 </body>
 
