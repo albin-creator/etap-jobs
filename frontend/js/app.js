@@ -278,7 +278,7 @@ new Vue({
     this.loadJobs();  
 
      // 🔥 SOCKET REAL TIME
-  const socket = io("https://etap-jobs-api.onrender.com");
+  const socket = io();
 
 
   socket.on('jobCreated', (job)=>{
@@ -294,6 +294,18 @@ new Vue({
   socket.on('jobUpdated',(job)=>{
 
       console.log("Job updated:",job);
+
+      // 🔔 Designer notification
+    if(this.role === 'designer' && job.status === 'design'){
+
+        const audio = new Audio('/audio/notification.mp3');
+
+        audio.play()
+        .catch(err => {
+            console.log("Audio blocked:", err);
+        });
+
+    }
 
       this.loadJobs();
 

@@ -1,4 +1,4 @@
-const API = 'https://etap-jobs-api.onrender.com/api';
+const API = '/api';
 
 function saveSession(token, user) {  
   localStorage.setItem('token', token);  

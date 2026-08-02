@@ -11,7 +11,12 @@ const { Server } = require('socket.io');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        "https://jobs.etap.qa"
+    ],
+    credentials:true
+}));
 app.use(express.json());
 
 
@@ -31,7 +36,8 @@ const server = http.createServer(app);
 // socket server
 const io = new Server(server, {
   cors: {
-    origin: "*"
+    origin: "https://jobs.etap.qa",
+    credentials:true
   }
 });
 
